@@ -1,3 +1,7 @@
+
+
+
+
 import React, { useEffect, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -10,21 +14,21 @@ const Navbar = () => {
 
   const dropdownRef = useRef();
 
-useEffect(() => {
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsOpen(false);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
     }
-  };
 
-  if (isOpen) {
-    document.addEventListener('mousedown', handleClickOutside);
-  }
-
-  return () => {
-    document.removeEventListener('mousedown', handleClickOutside);
-  };
-}, [isOpen]);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
 
   const scrollToSection = (id) => {
@@ -102,11 +106,10 @@ useEffect(() => {
 
             {/* Animated Dropdown */}
             <div
-              className={`absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg transform transition-all duration-300 origin-top-right ${
-                isOpen
-                  ? "scale-100 opacity-100"
-                  : "scale-95 opacity-0 pointer-events-none"
-              }`}
+              className={`absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg transform transition-all duration-300 origin-top-right ${isOpen
+                ? "scale-100 opacity-100"
+                : "scale-95 opacity-0 pointer-events-none"
+                }`}
             >
               <div className="py-1">
                 <Link
@@ -136,6 +139,20 @@ useEffect(() => {
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition-all"
                 >
                   Trips
+                </Link>
+                <Link
+                  to="/privacyPolicy"
+                  onClick={() => setIsOpen(false)}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition-all"
+                >
+                  Terms & Conditions
+                </Link>
+                <Link
+                  to="/contactUs"
+                  onClick={() => setIsOpen(false)}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition-all"
+                >
+                  Contact Us
                 </Link>
               </div>
             </div>
