@@ -10,7 +10,7 @@ Last updated on <strong>06-Nov-2025 15:08:13</strong> </p>
     <p className="intro">
       These Terms and Conditions, along with privacy policy or other terms
       ("Terms") constitute a binding agreement by and between{" "}
-      <strong>Spiritual Activity Club</strong> ("Neeraj Saini") and you relate to your use of our
+      <strong>IYF Kota</strong> ("Neeraj Saini") and you relate to your use of our
       website, goods (as applicable) or services (as applicable)
       (collectively, “Services”).
     </p>
@@ -113,7 +113,7 @@ Last updated on <strong>06-Nov-2025 15:08:13</strong> </p>
     </p>
     <p>
       This Privacy Policy outlines the practices of{" "}
-      <strong>Spiritual Activity Club</strong> ("we", "us", or "our")
+      <strong>IYF Kota</strong> ("Neeraj Saini") ("we", "us", or "our")
       regarding the collection, use, and disclosure of personal information
       when you use our Services, including our website and any related
       applications.
