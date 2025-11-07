@@ -9,6 +9,12 @@ export default function UpcomingEventHero() {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft());
   const navigate = useNavigate();
 
+
+ 
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+
   function getTimeLeft() {
     const diff = eventDate - new Date();
     if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
