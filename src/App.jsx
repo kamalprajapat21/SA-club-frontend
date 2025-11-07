@@ -32,22 +32,22 @@ function App() {
           <Route path="/team" element={<Team />} />
           <Route path="/trips" element={<Trips />} />
           <Route path="/historical-trips" element={<HistoricalTrips />} />
-        <Route path="/cultural-trips" element={<CulturalTrips />} />
-        <Route path="/educational-trips" element={<EducationalTrips />} />
+          <Route path="/cultural-trips" element={<CulturalTrips />} />
+          <Route path="/educational-trips" element={<EducationalTrips />} />
           <Route path="/termsandconditions" element={<TermsandConditions />} />
-        <Route path="/contactUs" element={<ContactUs />} />
-      <Route path="/registration" element={<RegistrationPage />} />
-      
+          <Route path="/contactUs" element={<ContactUs />} />
+          <Route path="/registration" element={<RegistrationPage />} />
+
 
 
           <Route path="/" element={
             <>
-              <UpcomingEvent/>
+              <UpcomingEvent />
               <Hero />
               <Activities />
               <Events />
               <Contact />
-           
+
             </>
           } />
         </Routes>
@@ -55,5 +55,6 @@ function App() {
     </Router>
   );
 }
+
 
 export default App;
