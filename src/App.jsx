@@ -34,7 +34,7 @@ function App() {
           <Route path="/historical-trips" element={<HistoricalTrips />} />
         <Route path="/cultural-trips" element={<CulturalTrips />} />
         <Route path="/educational-trips" element={<EducationalTrips />} />
-          <Route path="/termsandConditions" element={<TermsandConditions />} />
+          <Route path="/termsandconditions" element={<TermsandConditions />} />
         <Route path="/contactUs" element={<ContactUs />} />
       <Route path="/registration" element={<RegistrationPage />} />
       
