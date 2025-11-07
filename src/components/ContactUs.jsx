@@ -17,19 +17,6 @@ return (
         </p>
 
         <div className="space-y-3 text-gray-800 text-[1.05rem] leading-relaxed">
-            <p>
-                <strong>Merchant Legal Entity Name:</strong>{" "}
-                <span className="text-indigo-600">DEVANDRA YADAV</span>
-            </p>
-            <p>
-                <strong>Registered Address:</strong> C-179 Srinath Puram, Kota,
-                Rajasthan, PIN: 324010
-            </p>
-            <p>
-                <strong>Operational Address:</strong> C-179 Srinath Puram, Kota,
-                Rajasthan, PIN: 324010
-            </p>
-            <p>
                 <strong>Telephone No:</strong>{" "}
                 <a href="tel:9352080233" className="text-blue-600 hover:text-blue-800">
                     9352080233
