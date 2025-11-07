@@ -10,8 +10,7 @@ Last updated on <strong>06-Nov-2025 15:08:13</strong> </p>
     <p className="intro">
       These Terms and Conditions, along with privacy policy or other terms
       ("Terms") constitute a binding agreement by and between{" "}
-      <strong>Spiritual Activity Club</strong> ("Website Owner" or "we" or
-      "us" or "our") and you ("you" or "your") and relate to your use of our
+      <strong>Spiritual Activity Club</strong> ("Neeraj Saini") and you relate to your use of our
       website, goods (as applicable) or services (as applicable)
       (collectively, “Services”).
     </p>
