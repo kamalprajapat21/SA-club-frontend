@@ -6,7 +6,6 @@ return ( <div className="terms-container"> <div className="terms-card">
 {/* Header */} <div className="terms-header"> <ScrollText size={40} className="terms-icon" /> <h1>Terms & Conditions</h1> </div> <p className="last-updated">
 Last updated on <strong>06-Nov-2025 15:08:13</strong> </p>
 
-```
     {/* Terms & Conditions Section */}
     <p className="intro">
       These Terms and Conditions, along with privacy policy or other terms

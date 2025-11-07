@@ -141,7 +141,7 @@ const Navbar = () => {
                   Trips
                 </Link>
                 <Link
-                  to="/termsandConditions"
+                  to="/termsandconditions"
                   onClick={() => setIsOpen(false)}
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition-all"
                 >
