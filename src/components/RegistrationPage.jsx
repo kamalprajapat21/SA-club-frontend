@@ -1,189 +1,160 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
 
-export default function RegistrationPage() {
-  const [formData, setFormData] = useState({
+/**
+ * Registration page
+ * - Collects fields (name, mobile, email, dob, referencePerson, attendedBefore)
+ * - Posts to /api/initiate-payment (server returns paymentUrl)
+ * - Redirects to paymentUrl
+ */
+
+export default function Registration() {
+  const [form, setForm] = useState({
     name: "",
     mobile: "",
     email: "",
     dob: "",
-    reference: "",
-    participationType: "",
-    reason: "",
-   
+    referencePerson: "",
+    attendedBefore: "" // "Yes" or "No"
   });
+  const [loading, setLoading] = useState(false);
 
-  const [submitted, setSubmitted] = useState(false);
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setForm((s) => ({ ...s, [name]: value }));
+  }
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
-  };
-
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-
-    // Validation (basic)
-    if (!formData.name || !formData.mobile || !formData.email || !formData.dob) {
-      alert("Please fill all required fields.");
+    // Basic validation
+    if (!form.name || !form.mobile || !form.email || !form.dob || !form.attendedBefore) {
+      alert("Please complete all required fields (including 'Attended Before').");
       return;
     }
-    // if (!formData.agree) {
-    //   alert("Please agree to the terms before submitting.");
-    //   return;
-    // }
 
-    // You’ll replace this with an API call later
-    console.log("Form submitted:", formData);
-    setSubmitted(true);
-  };
+    setLoading(true);
+    try {
+      const res = await fetch("/api/initiate-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          amount: 100 // ₹100 fixed amount
+        })
+      });
 
-  if (submitted) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 text-center p-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-md bg-white shadow-xl rounded-2xl p-8"
-        >
-          <h2 className="text-3xl font-semibold text-slate-800 mb-4">
-            Registration Successful!
-          </h2>
-          <p className="text-slate-600 mb-6">
-            Thank you for registering for <b>Abhyuthanam 2025</b>.  
-            You’ll receive a confirmation email shortly.
-          </p>
-          <p className="text-sm text-slate-500">
-            Keep your payment receipt and email handy for entry verification.
-          </p>
-        </motion.div>
-      </div>
-    );
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data?.message || "Failed to initiate payment");
+      }
+      const paymentUrl = data.paymentUrl;
+      if (!paymentUrl) throw new Error("Payment URL missing");
+
+      // Redirect to PhonePe page
+      window.location.href = paymentUrl;
+    } catch (err) {
+      console.error(err);
+      alert("Could not initiate payment. Please try again or contact admin.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 flex items-center justify-center px-4 py-12">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8"
-      >
-        <h1 className="text-4xl font-semibold text-slate-800 mb-6 text-center">
-          Abhyuthanam 2025 Registration
-        </h1>
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label className="block text-sm text-slate-600 mb-1">Full Name *</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full border border-slate-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
-            />
+    <div style={styles.page}>
+      <div style={styles.card}>
+        <h1 style={styles.title}>Abhyuthanam 2025 — Registration</h1>
+        <p style={styles.subtitle}>Registration fee: ₹100. Fill details and proceed to payment.</p>
+
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <label style={styles.label}>Full Name *</label>
+          <input name="name" value={form.name} onChange={handleChange} style={styles.input} required />
+
+          <label style={styles.label}>Mobile (WhatsApp) *</label>
+          <input name="mobile" value={form.mobile} onChange={handleChange} style={styles.input} required />
+
+          <label style={styles.label}>Email ID *</label>
+          <input name="email" type="email" value={form.email} onChange={handleChange} style={styles.input} required />
+
+          <label style={styles.label}>Date of Birth *</label>
+          <input name="dob" type="date" value={form.dob} onChange={handleChange} style={styles.input} required />
+
+          <label style={styles.label}>Reference Person (who inspired you)</label>
+          <input name="referencePerson" value={form.referencePerson} onChange={handleChange} style={styles.input} />
+
+          <div style={{ marginTop: 6 }}>
+            <label style={styles.label}>Have you attended Abhyuthanam before? *</label>
+            <div style={{ display: "flex", gap: 16, marginTop: 8 }}>
+              <label style={styles.radioLabel}>
+                <input
+                  type="radio"
+                  name="attendedBefore"
+                  value="Yes"
+                  checked={form.attendedBefore === "Yes"}
+                  onChange={handleChange}
+                  required
+                />{" "}
+                Yes
+              </label>
+              <label style={styles.radioLabel}>
+                <input
+                  type="radio"
+                  name="attendedBefore"
+                  value="No"
+                  checked={form.attendedBefore === "No"}
+                  onChange={handleChange}
+                  required
+                />{" "}
+                No
+              </label>
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm text-slate-600 mb-1">
-              Mobile Number (WhatsApp) *
-            </label>
-            <input
-              type="tel"
-              name="mobile"
-              value={formData.mobile}
-              onChange={handleChange}
-              className="w-full border border-slate-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm text-slate-600 mb-1">Email ID *</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full border border-slate-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm text-slate-600 mb-1">Date of Birth *</label>
-            <input
-              type="date"
-              name="dob"
-              value={formData.dob}
-              onChange={handleChange}
-              className="w-full border border-slate-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm text-slate-600 mb-1">
-              Reference Person (Who inspired you to join)
-            </label>
-            <input
-              type="text"
-              name="reference"
-              value={formData.reference}
-              onChange={handleChange}
-              className="w-full border border-slate-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
-            />
-          </div>
-
-        <div>
-            <label className="block text-sm text-slate-600 mb-1">
-              Have you ever attended Abhyuthanam Festival ?
-            </label>
-            <select
-              name="participationType"
-              value={formData.participationType}
-              onChange={handleChange}
-              className="w-full border border-slate-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
-            >
-              <option value="">Select an option</option>
-              <option value="Yes">Yes, I have attended.</option>
-              <option value="No">No, I haven't</option>
-            </select>
-          </div>
-
-          {/* <div>
-            <label className="block text-sm text-slate-600 mb-1">
-              
-            </label>
-            <textarea
-              name="reason"
-              value={formData.reason}
-              onChange={handleChange}
-              rows="4"
-              className="w-full border border-slate-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
-            />
-          </div> */}
-
-          {/* <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              name="agree"
-              checked={formData.agree}
-              onChange={handleChange}
-              className="h-4 w-4 text-slate-600"
-            />
-            <label className="text-sm text-slate-600">
-              I confirm that I have completed the ₹400 payment and agree to the event
-              terms.
-            </label>
-          </div> */}
-
-          <button
-            type="submit"
-            className="w-full py-3 bg-slate-800 text-white text-lg rounded-full hover:bg-slate-700 transition-all duration-300"
-          >
-            Submit Registration
+          <button type="submit" disabled={loading} style={styles.button}>
+            {loading ? "Redirecting to payment..." : "Proceed to Payment"}
           </button>
         </form>
-      </motion.div>
+      </div>
     </div>
   );
 }
+
+const styles = {
+  page: {
+    minHeight: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "linear-gradient(180deg,#f5f7fb,#ffffff)",
+    padding: "40px 20px"
+  },
+  card: {
+    width: "100%",
+    maxWidth: 760,
+    background: "#fff",
+    borderRadius: 14,
+    boxShadow: "0 10px 30px rgba(15, 23, 42, 0.08)",
+    padding: 28
+  },
+  title: { fontSize: 28, margin: 0, color: "#0f172a" },
+  subtitle: { color: "#475569", marginTop: 8, marginBottom: 18 },
+  form: { display: "grid", gap: 12 },
+  label: { fontSize: 13, color: "#475569" },
+  input: {
+    padding: "10px 12px",
+    borderRadius: 8,
+    border: "1px solid #e6e9ee",
+    fontSize: 15,
+    outline: "none"
+  },
+  radioLabel: { fontSize: 15, color: "#0f172a" },
+  button: {
+    marginTop: 12,
+    padding: "12px 16px",
+    borderRadius: 10,
+    background: "#0f172a",
+    color: "#fff",
+    fontSize: 16,
+    border: "none",
+    cursor: "pointer"
+  }
+};
