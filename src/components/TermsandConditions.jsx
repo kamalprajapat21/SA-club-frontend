@@ -2,9 +2,9 @@ import React from "react";
 import { ScrollText } from "lucide-react";
 
 const TermsandConditions = () => {
-return ( <div className="terms-container"> <div className="terms-card">
-{/* Header */} <div className="terms-header"> <ScrollText size={40} className="terms-icon" /> <h1>Terms & Conditions</h1> </div> <p className="last-updated">
-Last updated on <strong>06-Nov-2025 15:08:13</strong> </p>
+  return (<div className="terms-container"> <div className="terms-card">
+    {/* Header */} <div className="terms-header"> <ScrollText size={40} className="terms-icon" /> <h1>Terms & Conditions</h1> </div> <p className="last-updated">
+      Last updated on <strong>06-Nov-2025 15:08:13</strong> </p>
 
     {/* Terms & Conditions Section */}
     <p className="intro">
@@ -75,14 +75,7 @@ Last updated on <strong>06-Nov-2025 15:08:13</strong> </p>
         Services, you are entering into a legally binding and enforceable
         contract with us for the Services.
       </li>
-      <li>
-        You shall be entitled to claim a refund of the payment made by you
-        in case we are not able to provide the Service. The timelines for
-        such return and refund will be according to the specific Service you
-        have availed and within the time period provided in our policies (as
-        applicable). In case you do not raise a refund claim within the
-        stipulated time, this would make you ineligible for a refund.
-      </li>
+
       <li>
         Notwithstanding anything contained in these Terms, the parties shall
         not be liable for any failure to perform an obligation under these
@@ -161,8 +154,8 @@ Last updated on <strong>06-Nov-2025 15:08:13</strong> </p>
     </p>
   </div>
 
-  {/* Styles */}
-  <style jsx>{`
+    {/* Styles */}
+    <style jsx>{`
     .terms-container {
       min-height: 100vh;
       background: linear-gradient(135deg, #e3f2fd, #f8bbd0);
@@ -268,10 +261,10 @@ Last updated on <strong>06-Nov-2025 15:08:13</strong> </p>
       }
     }
   `}</style>
-</div>
+  </div>
 
 
-);
+  );
 };
 
 export default TermsandConditions;
